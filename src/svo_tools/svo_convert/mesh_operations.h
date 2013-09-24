@@ -4,8 +4,8 @@
 #include <TriMesh.h>
 #include "geo_primitives.h"
 
-using namespace trimesh;
 using namespace std;
+using namespace trimesh;
 
 // create bounding cube around a mesh (pad if the bbox is not a cube)
 inline AABox<vec3> createMeshBBCube(const TriMesh* mesh){
@@ -22,8 +22,10 @@ inline AABox<vec3> createMeshBBCube(const TriMesh* mesh){
 	return AABox<vec3>(mesh_min,mesh_max);
 }
 
-inline void moveToOrigin(const TriMesh* mesh, AABox<vec3> bounding_box){
-
+inline void moveToOrigin(TriMesh* mesh, AABox<vec3> bounding_box){
+	for(size_t i = 0; i < mesh->vertices.size() ; i++){
+		mesh->vertices[i] = mesh->vertices[i] - bounding_box.min;
+	}
 }
 
 #endif

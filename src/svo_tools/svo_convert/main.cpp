@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include <sstream>
+#include "mesh_operations.h"
 
 
 using namespace std;
@@ -73,23 +74,18 @@ int main(int argc, char *argv[]){
 	// Parse parameters
 	parseProgramParameters(argc,argv);
 
-	// Read mesh
-	TriMesh *themesh = TriMesh::read(filename.c_str());
-	themesh->need_faces(); // unpack triangle strips so we have faces
-	themesh->need_bbox(); // compute the bounding box
-	themesh->need_normals();
+	// Read mesh, calculate bbox and move to origin
+	TriMesh* mesh = TriMesh::read(filename.c_str());
+	mesh->need_faces(); // unpack triangle strips so we have faces
+	mesh->need_bbox(); // compute the bounding box
+	mesh->need_normals();
+	AABox<vec3> mesh_bbcube = createMeshBBCube(mesh);
+	moveToOrigin(mesh, mesh_bbcube);
 
-	// Move mesh to orign
-	AABox<vec3> mesh_bbox = createMeshBBCube(themesh); // pad the mesh BBOX out to be a cube
-//
-//
-//	// Moving mesh to origin
-//	cout << "Moving mesh to origin ... "; 
-//	Timer timer = Timer();
-//	for(size_t i = 0; i < themesh->vertices.size() ; i++){
-//		themesh->vertices[i] = themesh->vertices[i] - mesh_bbox.min;
-//	}
-//	cout << "done in " << timer.getTotalTimeSeconds() << " s." << endl;
+	// Prepare VoxelData array
+
+
+
 //
 //	// Write mesh to format we can stream in
 //	string base = filename.substr(0,filename.find_last_of("."));
