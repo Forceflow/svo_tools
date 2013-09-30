@@ -26,5 +26,11 @@
     <ClInclude Include="geo_primitives.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="voxelization.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="svo_convert_util.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

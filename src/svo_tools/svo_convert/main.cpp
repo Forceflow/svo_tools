@@ -2,8 +2,9 @@
 #include <vector>
 #include <string>
 #include <sstream>
+#include "svo_convert_util.h"
 #include "mesh_operations.h"
-
+#include "voxelization.h"
 
 using namespace std;
 using namespace trimesh;
@@ -21,9 +22,11 @@ string version = "1.0";
 
 // Program parameters
 string filename = "";
+size_t gridsize = 1024;
+bool verbose = true;
 
 // Program variables
-
+TriMesh* mesh;
 
 void printInfo(){
 	cout << "-------------------------------------------------------------" << endl;
@@ -59,30 +62,45 @@ void parseProgramParameters(int argc, char* argv[]){
 		printInvalid(); exit(0);
 	} 
 	for (int i = 1; i < argc; i++) {
-			if (string(argv[i]) == "-f") {
-				filename = argv[i + 1]; 
-				i++;
-			} else {
-				printInvalid(); exit(0);
+		if (string(argv[i]) == "-f") {
+			filename = argv[i + 1]; 
+			i++;
+		} else if (string(argv[i]) == "-s") {
+			gridsize = atoi(argv[i + 1]);
+			if (!isPowerOf2(gridsize)) {
+				cout << "Requested gridsize is not a power of 2" << endl; printInvalid(); exit(0);
 			}
+			i++;
+		} else {
+			printInvalid(); exit(0);
+		}
 	}
-	cout << "  filename: " << filename << endl;
+	if(verbose){
+		cout << "  filename: " << filename << endl;
+		cout << "  gridsize: " << gridsize << endl;
+	}
 }
 
 int main(int argc, char *argv[]){
 	printInfo();
+
 	// Parse parameters
 	parseProgramParameters(argc,argv);
 
 	// Read mesh, calculate bbox and move to origin
-	TriMesh* mesh = TriMesh::read(filename.c_str());
+	mesh = TriMesh::read(filename.c_str());
 	mesh->need_faces(); // unpack triangle strips so we have faces
 	mesh->need_bbox(); // compute the bounding box
 	mesh->need_normals();
 	AABox<vec3> mesh_bbcube = createMeshBBCube(mesh);
 	moveToOrigin(mesh, mesh_bbcube);
 
-	// Prepare VoxelData array
+	// Prepare voxel storage
+	size_t* voxels = new size_t[gridsize*gridsize*gridsize]; // Array holds 0 if there is no voxel, and an index if there is voxel data
+	vector<VoxelData> voxel_data; // Dynamic-sized array holding voxel data
+	voxel_data.push_back(VoxelData()); // first voxel_data is empty
+
+
 
 
 
