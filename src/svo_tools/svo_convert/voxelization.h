@@ -13,4 +13,8 @@ struct VoxelData{
 	VoxelData(bool filled, vec3 normal, vec3 color): normal(normal), color(color){}
 };
 
+void voxelize(const TriMesh* mesh, size_t gridsize, size_t* voxels, vector<VoxelData>& voxel_data){
+
+}
+
 #endif

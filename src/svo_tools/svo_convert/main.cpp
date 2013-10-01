@@ -25,9 +25,6 @@ string filename = "";
 size_t gridsize = 1024;
 bool verbose = true;
 
-// Program variables
-TriMesh* mesh;
-
 void printInfo(){
 	cout << "-------------------------------------------------------------" << endl;
 	cout << "Model to .SVO converter " << version << endl;
@@ -88,7 +85,7 @@ int main(int argc, char *argv[]){
 	parseProgramParameters(argc,argv);
 
 	// Read mesh, calculate bbox and move to origin
-	mesh = TriMesh::read(filename.c_str());
+	TriMesh* mesh = TriMesh::read(filename.c_str());
 	mesh->need_faces(); // unpack triangle strips so we have faces
 	mesh->need_bbox(); // compute the bounding box
 	mesh->need_normals();
@@ -96,9 +93,14 @@ int main(int argc, char *argv[]){
 	moveToOrigin(mesh, mesh_bbcube);
 
 	// Prepare voxel storage
-	size_t* voxels = new size_t[gridsize*gridsize*gridsize]; // Array holds 0 if there is no voxel, and an index if there is voxel data
+	size_t max_index = gridsize*gridsize*gridsize;
+	size_t* voxels = new size_t[max_index]; // Array holds 0 if there is no voxel, and an index if there is voxel data
+	memset(voxels,0,max_index*sizeof(size_t)); // Clear it
 	vector<VoxelData> voxel_data; // Dynamic-sized array holding voxel data
 	voxel_data.push_back(VoxelData()); // first voxel_data is empty
+
+	// Voxelize
+
 
 
 
