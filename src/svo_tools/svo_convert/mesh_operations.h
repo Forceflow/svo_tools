@@ -7,7 +7,7 @@
 using namespace std;
 using namespace trimesh;
 
-// create bounding cube around a mesh (pad if the bbox is not a cube)
+// Create bounding cube around a mesh (pad if the bbox is not a cube)
 inline AABox<vec3> createMeshBBCube(const TriMesh* mesh){
 	vec3 mesh_min = mesh->bbox.min;
 	vec3 mesh_max = mesh->bbox.max;
@@ -23,6 +23,7 @@ inline AABox<vec3> createMeshBBCube(const TriMesh* mesh){
 }
 
 inline void moveToOrigin(TriMesh* mesh, AABox<vec3> bounding_box){
+	// TODO: might be interesting for OpenMP optimalization
 	for(size_t i = 0; i < mesh->vertices.size(); i++){
 		mesh->vertices[i] = mesh->vertices[i] - bounding_box.min;
 	}
