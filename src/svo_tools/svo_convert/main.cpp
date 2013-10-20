@@ -91,6 +91,7 @@ int main(int argc, char *argv[]){
 	mesh->need_normals();
 	AABox<vec3> mesh_bbcube = createMeshBBCube(mesh);
 	moveToOrigin(mesh, mesh_bbcube);
+	float unitlength = (mesh_bbcube.max[0] - mesh_bbcube.min[0]) / ((float) gridsize);
 
 	// Prepare voxel storage
 	size_t max_index = gridsize*gridsize*gridsize;

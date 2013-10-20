@@ -2,10 +2,16 @@
 #define VOXELIZATION_H_
 
 #include <TriMesh.h>
+#include "geo_primitives.h"
+#include "morton.h"
 
 using namespace std;
 using namespace trimesh;
 
+#define EMPTY_VOXEL 0
+typedef Vec<3, unsigned int> uivec3;
+
+// Struct to hold collected voxel data
 struct VoxelData{
 	vec3 normal;
 	vec3 color;
@@ -13,6 +19,6 @@ struct VoxelData{
 	VoxelData(bool filled, vec3 normal, vec3 color): normal(normal), color(color){}
 };
 
-void voxelize(const TriMesh* mesh, size_t gridsize, size_t* voxels, vector<VoxelData>& voxel_data);
+void voxelize(const TriMesh* mesh, size_t gridsize, float unitlength, size_t* voxels, vector<VoxelData>& voxel_data);
 
 #endif
