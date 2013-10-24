@@ -2,6 +2,7 @@
 #define VOXELIZATION_H_
 
 #include <TriMesh.h>
+#include "svo_convert_util.h"
 #include "geo_primitives.h"
 #include "morton.h"
 
