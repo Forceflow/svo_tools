@@ -124,6 +124,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="voxelization.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="geo_primitives.h" />
