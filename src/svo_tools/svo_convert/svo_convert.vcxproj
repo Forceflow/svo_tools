@@ -129,6 +129,7 @@
   <ItemGroup>
     <ClInclude Include="geo_primitives.h" />
     <ClInclude Include="mesh_operations.h" />
+    <ClInclude Include="morton.h" />
     <ClInclude Include="svo_convert_util.h" />
     <ClInclude Include="voxelization.h" />
   </ItemGroup>

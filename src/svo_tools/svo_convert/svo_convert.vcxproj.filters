@@ -35,5 +35,8 @@
     <ClInclude Include="svo_convert_util.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="morton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
