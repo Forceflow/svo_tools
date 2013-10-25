@@ -5,6 +5,7 @@
 #include "svo_convert_util.h"
 #include "geo_primitives.h"
 #include "morton.h"
+#include "intersection.h"
 
 using namespace std;
 using namespace trimesh;
@@ -20,6 +21,6 @@ struct VoxelData{
 	VoxelData(bool filled, vec3 normal, vec3 color): normal(normal), color(color){}
 };
 
-void voxelize(const TriMesh* mesh, size_t gridsize, float unitlength, size_t* voxels, vector<VoxelData>& voxel_data);
+void voxelize(const TriMesh* mesh, size_t gridsize, float unitlength, size_t* voxels, vector<VoxelData>& voxel_data, size_t& nfilled);
 
 #endif

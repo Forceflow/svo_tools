@@ -96,19 +96,12 @@ int main(int argc, char *argv[]){
 	// Prepare voxel storage
 	size_t max_index = gridsize*gridsize*gridsize;
 	size_t* voxels = new size_t[max_index]; // Array holds 0 if there is no voxel, and an index if there is voxel data
-	memset(voxels,0,max_index*sizeof(size_t)); // Clear it
 	vector<VoxelData> voxel_data; // Dynamic-sized array holding voxel data
-	voxel_data.push_back(VoxelData()); // first voxel_data is empty
 
 	// Voxelize
+	voxelize(mesh,gridsize,unitlength,voxels,voxel_data);
 
 
-
-
-
-
-
-//
 //	// Write mesh to format we can stream in
 //	string base = filename.substr(0,filename.find_last_of("."));
 //	std::string tri_header_out_name = base + string(".tri");

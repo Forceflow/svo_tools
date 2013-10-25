@@ -38,5 +38,8 @@
     <ClInclude Include="morton.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="intersection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -12,6 +12,10 @@ inline Vec<D,T> average3Vec(const Vec<D,T> v0, const Vec<D,T> v1, const Vec<D,T>
 	return answer;
 }
 
+template <typename T> T clampval(const T& value, const T& low, const T& high) {
+  return value < low ? low : (value > high ? high : value); 
+}
+
 inline int isPowerOf2(unsigned int x){
   return ((x != 0) && !(x & (x - 1)));
 }
