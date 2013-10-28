@@ -7,6 +7,7 @@ OctreeBuilder::OctreeBuilder(size_t gridlength, bool generate_levels) :
 		b_buffers.resize(b_maxdepth+1);
 		for(int i = 0; i < b_maxdepth+1; i++){b_buffers[i].reserve(8);}
 		b_max_morton = mortonEncode_LUT(int(gridlength-1),int(gridlength-1),int(gridlength-1));
+		// Push back first data point (which is always NULL)
 		octree_data.push_back(DataPoint());
 }
 

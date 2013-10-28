@@ -1,10 +1,6 @@
-#include <TriMesh.h>
-#include <vector>
-#include <string>
-#include <sstream>
-#include "svo_convert_util.h"
-#include "mesh_operations.h"
-#include "voxelization.h"
+#define _CRT_SECURE_NO_DEPRECATE // so yeah, no fopen_s (it's not portable)
+
+#include "svo_convert.h"
 
 using namespace std;
 using namespace trimesh;
@@ -79,31 +75,10 @@ void parseProgramParameters(int argc, char* argv[]){
 }
 
 int main(int argc, char *argv[]){
-	printInfo();
-
 	// Parse parameters
+
+	printInfo();
 	parseProgramParameters(argc,argv);
 
-	cout << "Loading mesh..." << endl;
-	// Read mesh, calculate bbox and move to origin
-	TriMesh* mesh = TriMesh::read(filename.c_str());
-	mesh->need_faces(); // unpack triangle strips so we have faces
-	mesh->need_bbox(); // compute the bounding box
-	mesh->need_normals();
-	AABox<vec3> mesh_bbcube = createMeshBBCube(mesh);
-	cout << "Moving to origin ..." << endl;
-	moveToOrigin(mesh, mesh_bbcube);
-	float unitlength = (mesh_bbcube.max[0] - mesh_bbcube.min[0]) / ((float) gridsize);
-
-	// Prepare voxel storage
-	cout << "Preparing voxel storage ..." << endl;
-	size_t max_index = gridsize*gridsize*gridsize;
-	size_t* voxels = new size_t[max_index]; // Array holds 0 if there is no voxel, and an index if there is voxel data
-	vector<VoxelData> voxel_data; // Dynamic-sized array holding voxel data
-	size_t nfilled = 0;
-
-	// Voxelize
-	cout << "Voxelizing ..." << endl;
-	voxelize(mesh,gridsize,unitlength,voxels,voxel_data, nfilled);
-
+	convert2svo(filename,gridsize);
 }

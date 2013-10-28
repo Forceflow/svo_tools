@@ -116,8 +116,6 @@ void voxelize(const TriMesh* mesh, size_t gridsize, float unitlength, size_t* vo
 
 					uint64_t index = mortonEncode_LUT(z,y,x);
 
-					//assert(index-morton_start < (morton_end-morton_start));
-
 					if(! voxels[index-morton_start] == EMPTY_VOXEL){continue;} // already marked, continue
 
 					// TRIANGLE PLANE THROUGH BOX TEST
@@ -144,13 +142,10 @@ void voxelize(const TriMesh* mesh, size_t gridsize, float unitlength, size_t* vo
 					if (((n_zx_e1 DOT p_zx) + d_xz_e1) < 0.0f){continue;}
 					if (((n_zx_e2 DOT p_zx) + d_xz_e2) < 0.0f){continue;}
 
-
 					voxel_data.push_back(VoxelData(t.normal, vec3(0,0,0)));
 					voxels[index-morton_start] = voxel_data.size()-1;
-
 					nfilled++;
 					continue;
-
 				}
 			}
 		}

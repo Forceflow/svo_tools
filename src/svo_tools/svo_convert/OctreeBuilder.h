@@ -8,6 +8,7 @@
 #include <vector>
 #include "Node.h"
 #include "svo_convert_util.h"
+#include "voxelization.h"
 
 using namespace std;
 
@@ -29,10 +30,11 @@ public:
 	bool generate_levels; // switch to enable basic generation of higher octree levels
 
 	OctreeBuilder(size_t gridlength, bool generate_levels);
-	void addDataPoint(const uint64_t morton_number, const DataPoint& point);
-	void finalizeTree();
+	void buildOctree(size_t* voxels, vector<VoxelData>& voxel_data);
 
 private:
+	void addDataPoint(const uint64_t morton_number, const DataPoint& point);
+	void finalizeTree();
 	bool isBufferEmpty(const vector<Node> &buffer);
 	Node groupNodes(const vector<Node> &buffer);
 	void addEmptyDataPoint(const int buffer);
@@ -40,6 +42,21 @@ private:
 	int computeBestFillBuffer(const size_t budget);
 	void fastAddEmpty(const size_t budget);
 };
+
+// Read voxels and data from arrays and build the SVO
+inline void OctreeBuilder::buildOctree(size_t* voxels, vector<VoxelData>& voxel_data){
+	for (size_t m = 0; m < (gridlength*gridlength*gridlength); m++) {
+		if (! voxels[m] == EMPTY_VOXEL) {
+			DataPoint d = DataPoint();
+			d.opacity = 1.0; // this voxel is filled
+			VoxelData& current_data = voxel_data.at(voxels[m]);
+			d.normal = current_data.normal;
+			d.color = current_data.color;
+			addDataPoint(m, d); // add data point to SVO building algorithm
+		}
+	}
+	finalizeTree();
+}
 
 // Check if a buffer contains non-empty nodes
 inline bool OctreeBuilder::isBufferEmpty(const vector<Node> &buffer){
