@@ -28,7 +28,7 @@ void voxelize(const TriMesh* mesh, size_t gridsize, float unitlength, size_t* vo
 	float unit_div = 1.0f / unitlength;
 	vec3 delta_p = vec3(unitlength,unitlength,unitlength);
 
-	for(size_t i = 0; mesh->faces.size(); i++){
+	for(size_t i = 0; i < mesh->faces.size(); i++){
 
 		// GRAB TRIANGLE INFO;
 		Triangle t;
@@ -144,12 +144,10 @@ void voxelize(const TriMesh* mesh, size_t gridsize, float unitlength, size_t* vo
 					if (((n_zx_e1 DOT p_zx) + d_xz_e1) < 0.0f){continue;}
 					if (((n_zx_e2 DOT p_zx) + d_xz_e2) < 0.0f){continue;}
 
-#ifdef BINARY_VOXELIZATION
-					voxels[index-morton_start] = true;
-#else
-					voxel_data.push_back(VoxelData(t.normal, average3Vec(t.v0_color,t.v1_color,t.v2_color)));
+
+					voxel_data.push_back(VoxelData(t.normal, vec3(0,0,0)));
 					voxels[index-morton_start] = voxel_data.size()-1;
-#endif
+
 					nfilled++;
 					continue;
 

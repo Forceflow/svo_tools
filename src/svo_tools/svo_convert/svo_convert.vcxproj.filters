@@ -21,6 +21,9 @@
     <ClCompile Include="voxelization.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="OctreeBuilder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mesh_operations.h">
@@ -39,6 +42,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="intersection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OctreeBuilder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Node.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DataPoint.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
