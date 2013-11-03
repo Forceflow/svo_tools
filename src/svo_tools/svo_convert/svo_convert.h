@@ -3,8 +3,6 @@
 
 #include <vector>
 #include <string>
-#include <vector>
-#include <string>
 #include <sstream>
 #include <TriMesh.h>
 #include "svo_convert_util.h"
