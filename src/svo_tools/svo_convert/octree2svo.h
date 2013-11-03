@@ -77,6 +77,4 @@ inline void octree2SVO(string filename, const vector<Node> &nodes, const vector<
 	fclose(svo_out);
 }
 
-
-
 #endif
