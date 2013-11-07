@@ -17,7 +17,7 @@ Building
 
 Usage
 -----
-* **svo_convert** -f /path/to/file.ply -s <gridsize>
+* **svo_convert** -f */path/to/file.ply* -s *gridsize*
 
 Full option list:
 * **-f** */path/to/file.ply* : Path to model file. Currently the file formats supported are those by TriMesh2: .ply, .3ds, .off, .obj.
