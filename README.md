@@ -10,7 +10,6 @@ Still very much in active development.
 
 Building
 --------
-
 * **Windows** : Build using VS2012 on Win 64-bit. 32-bit building is not encouraged, but should work.
 * **Linux** : Build using build_svo_convert.sh.
 
@@ -18,8 +17,7 @@ Building
 
 Usage
 -----
-
-* **svo_convert** -f /path/to/file.ply
+* **svo_convert** -f /path/to/file.ply -s <gridsize>
 
 Full option list:
 * **-f** */path/to/file.ply* : Path to model file. Currently the file formats supported are those by TriMesh2: .ply, .3ds, .off, .obj.
