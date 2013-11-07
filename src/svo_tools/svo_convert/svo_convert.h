@@ -13,14 +13,13 @@
 
 void convert2svo(string filename, size_t gridsize){
 	// Read mesh, calculate bbox and move to origin
-	cout << "Loading mesh..." << endl;
 	TriMesh* mesh = TriMesh::read(filename.c_str());
 	mesh->need_faces(); // unpack triangle strips so we have faces
 	mesh->need_bbox(); // compute the bounding box
 	mesh->need_normals();
 	AABox<vec3> mesh_bbcube = createMeshBBCube(mesh);
 
-	cout << "Moving to origin ..." << endl;
+	cout << "Moving mesh to origin ..." << endl;
 	moveToOrigin(mesh, mesh_bbcube);
 	float unitlength = (mesh_bbcube.max[0] - mesh_bbcube.min[0]) / ((float) gridsize);
 
@@ -30,15 +29,18 @@ void convert2svo(string filename, size_t gridsize){
 	size_t* voxels = new size_t[max_index]; // Array holds 0 if there is no voxel, and an index if there is voxel data
 	vector<VoxelData> voxel_data; // Dynamic-sized array holding voxel data
 	size_t nfilled = 0;
+	cout << "  allocated " << (max_index*sizeof(size_t))/1024 << " kb for voxel table." << endl;
 
 	// Voxelize
 	cout << "Voxelizing ..." << endl;
 	voxelize(mesh,gridsize,unitlength,voxels,voxel_data, nfilled);
+	cout << "  found " << nfilled << " voxels." << endl;
 
 	// SVO builder
 	cout << "Building SVO ..." << endl;
 	OctreeBuilder builder = OctreeBuilder(gridsize,false);
 	builder.buildOctree(voxels, voxel_data);
+	cout << "  octree built with " << builder.octree_nodes.size() << " nodes and " << builder.octree_data.size() << " data points." << endl;
 
 	// Free memory
 	cout << "Free memory ..." << endl;

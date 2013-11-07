@@ -78,6 +78,7 @@ int main(int argc, char *argv[]){
 	// Parse parameters
 
 	printInfo();
+	cout << "Reading program parameters ..." << endl;
 	parseProgramParameters(argc,argv);
 
 	convert2svo(filename,gridsize);

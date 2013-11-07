@@ -31,15 +31,14 @@ void voxelize(const TriMesh* mesh, size_t gridsize, float unitlength, size_t* vo
 	for(size_t i = 0; i < mesh->faces.size(); i++){
 
 		// GRAB TRIANGLE INFO;
-		Triangle t;
-		t.v0 = mesh->vertices[mesh->faces[i][X]];
-		t.v1 = mesh->vertices[mesh->faces[i][Y]];
-		t.v2 = mesh->vertices[mesh->faces[i][Z]];
-		t.normal = average3Vec<3,float>(mesh->normals[mesh->faces[i][X]], mesh->normals[mesh->faces[i][Y]], mesh->normals[mesh->faces[i][Z]]);
+		vec3 t_v0 = mesh->vertices[mesh->faces[i][X]];
+		vec3 t_v1 = mesh->vertices[mesh->faces[i][Y]];
+		vec3 t_v2 = mesh->vertices[mesh->faces[i][Z]];
+		vec3 t_normal = average3Vec<3,float>(mesh->normals[mesh->faces[i][X]], mesh->normals[mesh->faces[i][Y]], mesh->normals[mesh->faces[i][Z]]);
 		// TODO: grab colors
 
 		// compute triangle bbox in world and grid
-		AABox<vec3> t_bbox_world = computeBoundingBox(t.v0,t.v1,t.v2);
+		AABox<vec3> t_bbox_world = computeBoundingBox(t_v0,t_v1,t_v2);
 		AABox<ivec3> t_bbox_grid;
 		t_bbox_grid.min[0] = (int) (t_bbox_world.min[0] * unit_div); // using integer rounding to construct bbox
 		t_bbox_grid.min[1] = (int) (t_bbox_world.min[1] * unit_div);
@@ -57,9 +56,9 @@ void voxelize(const TriMesh* mesh, size_t gridsize, float unitlength, size_t* vo
 		t_bbox_grid.max[2]  = clampval<int>(t_bbox_grid.max[2], p_bbox_grid.min[2], p_bbox_grid.max[2]);
 
 		// COMMON PROPERTIES FOR THE TRIANGLE
-		vec3 e0 = t.v1 - t.v0;
-		vec3 e1 = t.v2 - t.v1;
-		vec3 e2 = t.v0 - t.v2;
+		vec3 e0 = t_v1 - t_v0;
+		vec3 e1 = t_v2 - t_v1;
+		vec3 e2 = t_v0 - t_v2;
 		vec3 to_normalize = (e0) CROSS (e1);
 		vec3 n = normalize(to_normalize); // triangle normal
 		// PLANE TEST PROPERTIES
@@ -67,8 +66,8 @@ void voxelize(const TriMesh* mesh, size_t gridsize, float unitlength, size_t* vo
 		if(n[X] > 0) { c[X] = unitlength;} 
 		if(n[Y] > 0) { c[Y] = unitlength;} 
 		if(n[Z] > 0) { c[Z] = unitlength;} 
-		float d1 = n DOT (c - t.v0); 
-		float d2 = n DOT ((delta_p - c) - t.v0);
+		float d1 = n DOT (c - t_v0); 
+		float d2 = n DOT ((delta_p - c) - t_v0);
 		// PROJECTION TEST PROPERTIES
 		// XY plane
 		vec2 n_xy_e0 = vec2(-1.0f*e0[Y], e0[X]);
@@ -79,9 +78,9 @@ void voxelize(const TriMesh* mesh, size_t gridsize, float unitlength, size_t* vo
 			n_xy_e1 = -1.0f * n_xy_e1;
 			n_xy_e2 = -1.0f * n_xy_e2;
 		}
-		float d_xy_e0 = (-1.0f * (n_xy_e0 DOT vec2(t.v0[X],t.v0[Y]))) + max(0.0f, unitlength*n_xy_e0[0]) + max(0.0f, unitlength*n_xy_e0[1]);
-		float d_xy_e1 = (-1.0f * (n_xy_e1 DOT vec2(t.v1[X],t.v1[Y]))) + max(0.0f, unitlength*n_xy_e1[0]) + max(0.0f, unitlength*n_xy_e1[1]);
-		float d_xy_e2 = (-1.0f * (n_xy_e2 DOT vec2(t.v2[X],t.v2[Y]))) + max(0.0f, unitlength*n_xy_e2[0]) + max(0.0f, unitlength*n_xy_e2[1]);
+		float d_xy_e0 = (-1.0f * (n_xy_e0 DOT vec2(t_v0[X],t_v0[Y]))) + max(0.0f, unitlength*n_xy_e0[0]) + max(0.0f, unitlength*n_xy_e0[1]);
+		float d_xy_e1 = (-1.0f * (n_xy_e1 DOT vec2(t_v1[X],t_v1[Y]))) + max(0.0f, unitlength*n_xy_e1[0]) + max(0.0f, unitlength*n_xy_e1[1]);
+		float d_xy_e2 = (-1.0f * (n_xy_e2 DOT vec2(t_v2[X],t_v2[Y]))) + max(0.0f, unitlength*n_xy_e2[0]) + max(0.0f, unitlength*n_xy_e2[1]);
 
 		// YZ plane
 		vec2 n_yz_e0 = vec2(-1.0f*e0[Z], e0[Y]);
@@ -92,9 +91,9 @@ void voxelize(const TriMesh* mesh, size_t gridsize, float unitlength, size_t* vo
 			n_yz_e1 = -1.0f * n_yz_e1;
 			n_yz_e2 = -1.0f * n_yz_e2;
 		}
-		float d_yz_e0 = (-1.0f * (n_yz_e0 DOT vec2(t.v0[Y],t.v0[Z]))) + max(0.0f, unitlength*n_yz_e0[0]) + max(0.0f, unitlength*n_yz_e0[1]);
-		float d_yz_e1 = (-1.0f * (n_yz_e1 DOT vec2(t.v1[Y],t.v1[Z]))) + max(0.0f, unitlength*n_yz_e1[0]) + max(0.0f, unitlength*n_yz_e1[1]);
-		float d_yz_e2 = (-1.0f * (n_yz_e2 DOT vec2(t.v2[Y],t.v2[Z]))) + max(0.0f, unitlength*n_yz_e2[0]) + max(0.0f, unitlength*n_yz_e2[1]);
+		float d_yz_e0 = (-1.0f * (n_yz_e0 DOT vec2(t_v0[Y],t_v0[Z]))) + max(0.0f, unitlength*n_yz_e0[0]) + max(0.0f, unitlength*n_yz_e0[1]);
+		float d_yz_e1 = (-1.0f * (n_yz_e1 DOT vec2(t_v1[Y],t_v1[Z]))) + max(0.0f, unitlength*n_yz_e1[0]) + max(0.0f, unitlength*n_yz_e1[1]);
+		float d_yz_e2 = (-1.0f * (n_yz_e2 DOT vec2(t_v2[Y],t_v2[Z]))) + max(0.0f, unitlength*n_yz_e2[0]) + max(0.0f, unitlength*n_yz_e2[1]);
 
 		// ZX plane
 		vec2 n_zx_e0 = vec2(-1.0f*e0[X], e0[Z]);
@@ -105,9 +104,9 @@ void voxelize(const TriMesh* mesh, size_t gridsize, float unitlength, size_t* vo
 			n_zx_e1 = -1.0f * n_zx_e1;
 			n_zx_e2 = -1.0f * n_zx_e2;
 		}
-		float d_xz_e0 = (-1.0f * (n_zx_e0 DOT vec2(t.v0[Z],t.v0[X]))) + max(0.0f, unitlength*n_zx_e0[0]) + max(0.0f, unitlength*n_zx_e0[1]);
-		float d_xz_e1 = (-1.0f * (n_zx_e1 DOT vec2(t.v1[Z],t.v1[X]))) + max(0.0f, unitlength*n_zx_e1[0]) + max(0.0f, unitlength*n_zx_e1[1]);
-		float d_xz_e2 = (-1.0f * (n_zx_e2 DOT vec2(t.v2[Z],t.v2[X]))) + max(0.0f, unitlength*n_zx_e2[0]) + max(0.0f, unitlength*n_zx_e2[1]);
+		float d_xz_e0 = (-1.0f * (n_zx_e0 DOT vec2(t_v0[Z],t_v0[X]))) + max(0.0f, unitlength*n_zx_e0[0]) + max(0.0f, unitlength*n_zx_e0[1]);
+		float d_xz_e1 = (-1.0f * (n_zx_e1 DOT vec2(t_v1[Z],t_v1[X]))) + max(0.0f, unitlength*n_zx_e1[0]) + max(0.0f, unitlength*n_zx_e1[1]);
+		float d_xz_e2 = (-1.0f * (n_zx_e2 DOT vec2(t_v2[Z],t_v2[X]))) + max(0.0f, unitlength*n_zx_e2[0]) + max(0.0f, unitlength*n_zx_e2[1]);
 
 		// test possible grid boxes for overlap
 		for(int x = t_bbox_grid.min[X]; x <= t_bbox_grid.max[X]; x++){
@@ -142,7 +141,7 @@ void voxelize(const TriMesh* mesh, size_t gridsize, float unitlength, size_t* vo
 					if (((n_zx_e1 DOT p_zx) + d_xz_e1) < 0.0f){continue;}
 					if (((n_zx_e2 DOT p_zx) + d_xz_e2) < 0.0f){continue;}
 
-					voxel_data.push_back(VoxelData(t.normal, vec3(0,0,0)));
+					voxel_data.push_back(VoxelData(t_normal, vec3(0,0,0)));
 					voxels[index-morton_start] = voxel_data.size()-1;
 					nfilled++;
 					continue;
