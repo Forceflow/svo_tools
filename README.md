@@ -13,7 +13,16 @@ Building
 **Dependencies** for building are **[Trimesh2](http://gfx.cs.princeton.edu/proj/trimesh2/)** and OpenMP support. You can specify the location of the Trimesh2 library in both the VS solution file and the linux build script.
 
 * **Windows** : Build using *src/svo_tools/svo_tools.sln* VS2012 on Win 64-bit. 32-bit building is not encouraged, but should work.
-* **Linux** : Build using the script in *src/svo_tools/svo_convert/build_svo_convert.sh*. Specify in the script where you stored TriMesh2.
+* **Linux & Mac**: Build using cmake. Make sure you specify the environment variable TRIMESH2_ROOT.
+
+Typical compile on Linux would go:
+<pre>
+clone https://github.com/Forceflow/svo_tools
+export TRIMESH2_ROOT=/home/jeroen/development/trimesh2/
+cd svo_tools
+cmake .
+make
+</pre>
 
 Usage
 -----
