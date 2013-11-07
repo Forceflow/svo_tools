@@ -17,7 +17,7 @@ Building
 
 Typical compile on Linux would go:
 <pre>
-clone https://github.com/Forceflow/svo_tools
+git clone https://github.com/Forceflow/svo_tools
 export TRIMESH2_ROOT=/home/jeroen/development/trimesh2/
 cd svo_tools
 cmake .
