@@ -15,14 +15,15 @@ INCLUDE_DIRECTORIES (
   $ENV{TRIMESH2_ROOT}/include
 )
 
+IF (APPLE)
 LINK_DIRECTORIES (
-
-IF(APPLE)
   $ENV{TRIMESH2_ROOT}/lib.Darwin64
-ELIF(UNIX)
-  $ENV{TRIMESH2_ROOT}/lib.Linux64
-ENDIF(APPLE)
 )
+ELSEIF (UNIX)
+LINK_DIRECTORIES (
+  $ENV{TRIMESH2_ROOT}/lib.Linux64
+)
+ENDIF (APPLE)
 
 ADD_EXECUTABLE ( svo_convert
   ./src/svo_tools/svo_convert/main.cpp
