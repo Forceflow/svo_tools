@@ -25,10 +25,13 @@ void printInfo(){
 	cout << "-------------------------------------------------------------" << endl;
 	cout << "Model to .SVO converter " << version << endl;
 #ifdef _WIN32 || _WIN64
-	cout << "Windows ";
+	cout << "Windows version" << endl;
 #endif
-#ifdef __linux__
-	cout << "Linux ";
+#ifdef __LINUX__
+	cout << "Linux version" << endl;
+#endif
+#ifdef __APPLE__
+	cout << "OSX version" << endl;
 #endif
 #ifdef ENVIRONMENT64
 	cout << "64-bit version" << endl;
@@ -41,7 +44,12 @@ void printInfo(){
 }
 
 void printHelp(){
-	std::cout << "Example: "<< endl;
+        cout << "Available program parameters:" << endl;
+	cout << "	-f (filename)	: Path to model file (.obj, .ply, .3ds, .ray)" << endl;
+        cout << "	-s (gridsize)	: Grid size, shouldd be power of 2 (1,2,4,8,16,32,64,128,256,512 or 1024)" << endl;
+	cout << "";
+	cout << "Example: "<< endl;
+        cout << "	svo_convert -f bunny.ply -s 256" << endl;
 }
 
 void printInvalid(){
