@@ -31,11 +31,17 @@ void voxelize(const TriMesh* mesh, size_t gridsize, float unitlength, size_t* vo
 	for(size_t i = 0; i < mesh->faces.size(); i++){
 
 		// GRAB TRIANGLE INFO;
-		vec3 t_v0 = mesh->vertices[mesh->faces[i][X]];
-		vec3 t_v1 = mesh->vertices[mesh->faces[i][Y]];
-		vec3 t_v2 = mesh->vertices[mesh->faces[i][Z]];
+		vec3 t_v0 = mesh->vertices[mesh->faces[i][0]];
+		vec3 t_v1 = mesh->vertices[mesh->faces[i][1]];
+		vec3 t_v2 = mesh->vertices[mesh->faces[i][2]];
 		vec3 t_normal = average3Vec<3,float>(mesh->normals[mesh->faces[i][X]], mesh->normals[mesh->faces[i][Y]], mesh->normals[mesh->faces[i][Z]]);
-		// TODO: grab colors
+		vec3 t_color = vec3(1.0f,1.0f,1.0f);
+		if(!mesh->colors.empty()){ // if this mesh has colors, we're going to grab them for this triangle
+			vec3 t_v0_color = mesh->colors[mesh->faces[i][0]];
+			vec3 t_v1_color = mesh->colors[mesh->faces[i][1]];
+			vec3 t_v2_color = mesh->colors[mesh->faces[i][2]];
+			t_color = average3Vec(t_v0_color,t_v1_color,t_v1_color);  // average vertex colors to get triangle color (TODO: less lazy to interpolate)
+		}
 
 		// compute triangle bbox in world and grid
 		AABox<vec3> t_bbox_world = computeBoundingBox(t_v0,t_v1,t_v2);
@@ -141,7 +147,7 @@ void voxelize(const TriMesh* mesh, size_t gridsize, float unitlength, size_t* vo
 					if (((n_zx_e1 DOT p_zx) + d_xz_e1) < 0.0f){continue;}
 					if (((n_zx_e2 DOT p_zx) + d_xz_e2) < 0.0f){continue;}
 
-					voxel_data.push_back(VoxelData(t_normal, vec3(0,0,0)));
+					voxel_data.push_back(VoxelData(t_normal, t_color));
 					voxels[index-morton_start] = voxel_data.size()-1;
 					nfilled++;
 					continue;
