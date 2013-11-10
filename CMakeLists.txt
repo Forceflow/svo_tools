@@ -33,9 +33,13 @@ ADD_EXECUTABLE ( svo_convert
   ./src/svo_tools/svo_convert/voxelization.cpp
  )
 
+IF (NOT APPLE)
 TARGET_LINK_LIBRARIES ( svo_convert
   trimesh
-IF (NOT APPLE)
   gomp
-ENDIF (NOT APPLE)
 )
+#ELSE
+TARGET_LINK_LIBRARIES ( svo_convert
+  trimesh
+)
+ENDIF (NOT APPLE)
