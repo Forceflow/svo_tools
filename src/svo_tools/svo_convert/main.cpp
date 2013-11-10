@@ -93,6 +93,7 @@ void parseProgramParameters(int argc, char* argv[]){
 	if(verbose){
 		cout << "  filename: " << filename << endl;
 		cout << "  gridsize: " << gridsize << endl;
+		cout << "  color mode: " << color_mode << endl;
 	}
 }
 
