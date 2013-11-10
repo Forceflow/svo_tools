@@ -26,9 +26,12 @@ cmake .
 make
 </pre>
 ### OSX
-You need gcc for OSX, since the standard clang compiler doesn't support OpenMP, which the Trimesh2 library uses.
-To install gcc in OSX, Apple provides the *Command Line Tools for Xcode*, which can be downloaded from within Xcode (like described **[here](http://stackoverflow.com/questions/9353444/how-to-use-install-gcc-on-mac-os-x-10-8-xcode-4-4 here)**) or as a **[stand-alone download](https://developer.apple.com/downloads/)**.
 
+#### Installing GCC
+You need gcc for OSX, since the standard clang compiler doesn't support OpenMP, which the Trimesh2 library uses.
+* OSX Mountain Lion: To install gcc in OSX Mountain Lion, Apple provides the *Command Line Tools for Xcode*, which can be downloaded from within Xcode (like described **[here](http://stackoverflow.com/questions/9353444/how-to-use-install-gcc-on-mac-os-x-10-8-xcode-4-4 here)**) or as a **[stand-alone download](https://developer.apple.com/downloads/)**.
+
+#### Compiling 
 Cmake respects the environment variables CC and CXX, so setting them right before you run cmake should point the build process to gcc.
 
 Typical compile on OSX would go like this:
