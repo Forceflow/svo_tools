@@ -4,6 +4,7 @@ PROJECT ( svo_tools )
 
 IF (NOT APPLE)
 FIND_PACKAGE ( OpenMP REQUIRED )
+ENDIF (NOT APPLE)
 
 IF (MSVC)
   ADD_DEFINITIONS ( -openmp )
