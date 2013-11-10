@@ -38,7 +38,7 @@ TARGET_LINK_LIBRARIES ( svo_convert
   trimesh
   gomp
 )
-#ELSE
+ELSE
 TARGET_LINK_LIBRARIES ( svo_convert
   trimesh
 )
