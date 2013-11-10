@@ -14,7 +14,7 @@ using namespace trimesh;
 #endif
 
 // (GLOBAL) Program version
-string version = "1.0";
+string version = "1.1";
 
 // (GLOBAL) Program parameters
 string filename = "";
@@ -60,6 +60,7 @@ void printInvalid(){
 }
 
 void parseProgramParameters(int argc, char* argv[]){
+	string color_mode_s = "Color from model (fallback to fixed color if model has no color)";
 	// Input argument validation
 	if(argc<3){ // not enough arguments
 		printInvalid(); exit(0);
@@ -77,11 +78,13 @@ void parseProgramParameters(int argc, char* argv[]){
 		} else if (string(argv[i]) == "-c") {
 			string color_input = string(argv[i + 1]);
 			if (color_input == "model") {
-				color_mode = COLOR_FROM_MODEL;
+				color_mode = COLOR_FROM_MODEL; // default
 			} else if (color_input == "normal") {
 				color_mode = COLOR_NORMAL;
+				color_mode_s = "From face normals";
 			} else if (color_input == "fixed") {
 				color_mode = COLOR_FIXED;
+				color_mode_s = "Fixed";
 			} else {
 				cout << "Unrecognized color switch: " << color_input << ", so defaulting to colors from model." << endl;
 			}
@@ -90,10 +93,10 @@ void parseProgramParameters(int argc, char* argv[]){
 			printInvalid(); exit(0);
 		}
 	}
-	if(verbose){
+	if (verbose){
 		cout << "  filename: " << filename << endl;
 		cout << "  gridsize: " << gridsize << endl;
-		cout << "  color mode: " << color_mode << endl;
+		cout << "  color mode: " << color_mode_s << endl;
 	}
 }
 
