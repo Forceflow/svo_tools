@@ -11,7 +11,31 @@ using namespace trimesh;
 #define Y 1
 #define Z 2
 
-void voxelize(const TriMesh* mesh, size_t gridsize, float unitlength, size_t* voxels, vector<VoxelData>& voxel_data, size_t& nfilled) {
+// Get the shading normal for a given triangle (average of 3 vertex shading normals)
+vec3 getTriangleShadingNormal(const TriMesh* mesh, size_t face_id){
+	return average3Vec<3, float>(mesh->normals[mesh->faces[face_id][X]], mesh->normals[mesh->faces[face_id][Y]], mesh->normals[mesh->faces[face_id][Z]]);
+}
+
+// Get the given color for this triangle
+vec3 getTriangleColor(const TriMesh* mesh, size_t face_id, ColorMode c){
+	if (c == COLOR_FROM_MODEL){
+		if (!mesh->colors.empty()){ // if this mesh has colors, we're going to grab them for this triangle
+			vec3 t_v0_color = mesh->colors[mesh->faces[face_id][0]];
+			vec3 t_v1_color = mesh->colors[mesh->faces[face_id][1]];
+			vec3 t_v2_color = mesh->colors[mesh->faces[face_id][2]];
+			return average3Vec(t_v0_color, t_v1_color, t_v1_color);  // average vertex colors to get triangle color (TODO: less lazy to interpolate)
+		}
+		return FIXED_COLOR; // fallback if model contains no color: fixed color
+	} else if (c == COLOR_FIXED){
+		return FIXED_COLOR;
+	} else if (c == COLOR_NORMAL){
+		vec3 normal = normalize(getTriangleShadingNormal(mesh, face_id)); // get normal in range between -1.0 and 1.0
+		return (vec3((normal[0] + 1.0f) / 2.0f, (normal[1] + 1.0f) / 2.0f, (normal[2] + 1.0f) / 2.0f));
+	}
+	return FIXED_COLOR;
+}
+
+void voxelize(const TriMesh* mesh, size_t gridsize, float unitlength, ColorMode color_mode, size_t* voxels, vector<VoxelData>& voxel_data, size_t& nfilled) {
 	size_t morton_start = 0;
 	size_t morton_end = gridsize*gridsize*gridsize;
 
@@ -29,19 +53,9 @@ void voxelize(const TriMesh* mesh, size_t gridsize, float unitlength, size_t* vo
 	vec3 delta_p = vec3(unitlength,unitlength,unitlength);
 
 	for(size_t i = 0; i < mesh->faces.size(); i++){
-
-		// GRAB TRIANGLE INFO;
 		vec3 t_v0 = mesh->vertices[mesh->faces[i][0]];
 		vec3 t_v1 = mesh->vertices[mesh->faces[i][1]];
 		vec3 t_v2 = mesh->vertices[mesh->faces[i][2]];
-		vec3 t_normal = average3Vec<3,float>(mesh->normals[mesh->faces[i][X]], mesh->normals[mesh->faces[i][Y]], mesh->normals[mesh->faces[i][Z]]);
-		vec3 t_color = vec3(1.0f,1.0f,1.0f);
-		if(!mesh->colors.empty()){ // if this mesh has colors, we're going to grab them for this triangle
-			vec3 t_v0_color = mesh->colors[mesh->faces[i][0]];
-			vec3 t_v1_color = mesh->colors[mesh->faces[i][1]];
-			vec3 t_v2_color = mesh->colors[mesh->faces[i][2]];
-			t_color = average3Vec(t_v0_color,t_v1_color,t_v1_color);  // average vertex colors to get triangle color (TODO: less lazy to interpolate)
-		}
 
 		// compute triangle bbox in world and grid
 		AABox<vec3> t_bbox_world = computeBoundingBox(t_v0,t_v1,t_v2);
@@ -147,7 +161,7 @@ void voxelize(const TriMesh* mesh, size_t gridsize, float unitlength, size_t* vo
 					if (((n_zx_e1 DOT p_zx) + d_xz_e1) < 0.0f){continue;}
 					if (((n_zx_e2 DOT p_zx) + d_xz_e2) < 0.0f){continue;}
 
-					voxel_data.push_back(VoxelData(t_normal, t_color));
+					voxel_data.push_back(VoxelData(getTriangleShadingNormal(mesh, i), getTriangleColor(mesh, i, color_mode)));
 					voxels[index-morton_start] = voxel_data.size()-1;
 					nfilled++;
 					continue;

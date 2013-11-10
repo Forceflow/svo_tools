@@ -12,10 +12,9 @@ using namespace trimesh;
 
 #define EMPTY_VOXEL 0 // pointer to 0 means empty voxel
 
-
 // Voxel color options
-enum ColorMode { COLOR_FROM_MODEL, COLOR_FIXED, COLOR_NORMAL };
-vec3 fixed_color = vec3(0.0f,0.0f,0.0f);
+enum ColorMode {COLOR_FROM_MODEL, COLOR_FIXED, COLOR_NORMAL};
+extern vec3 FIXED_COLOR;
 
 // Struct to hold collected voxel data
 struct VoxelData{
@@ -25,6 +24,6 @@ struct VoxelData{
 	VoxelData(vec3 normal, vec3 color): normal(normal), color(color){}
 };
 
-void voxelize(const TriMesh* mesh, size_t gridsize, float unitlength, size_t* voxels, vector<VoxelData>& voxel_data, size_t& nfilled);
+void voxelize(const TriMesh* mesh, size_t gridsize, float unitlength, ColorMode c, size_t* voxels, vector<VoxelData>& voxel_data, size_t& nfilled);
 
 #endif
