@@ -13,15 +13,15 @@ using namespace trimesh;
 #endif
 #endif
 
-// Program version
+// (GLOBAL) Program version
 string version = "1.0";
 
-// Program parameters
+// (GLOBAL) Program parameters
 string filename = "";
 size_t gridsize = 512;
 bool verbose = true;
 ColorMode color_mode = COLOR_FROM_MODEL;
-
+vec3 FIXED_COLOR = vec3(0.0f, 0.0f, 0.0f);
 
 void printInfo(){
 	cout << "-------------------------------------------------------------" << endl;
@@ -74,6 +74,18 @@ void parseProgramParameters(int argc, char* argv[]){
 				cout << "Requested gridsize is not a power of 2" << endl; printInvalid(); exit(0);
 			}
 			i++;
+		} else if (string(argv[i]) == "-c") {
+			string color_input = string(argv[i + 1]);
+			if (color_input == "model") {
+				color_mode = COLOR_FROM_MODEL;
+			} else if (color_input == "normal") {
+				color_mode = COLOR_NORMAL;
+			} else if (color_input == "fixed") {
+				color_mode = COLOR_FIXED;
+			} else {
+				cout << "Unrecognized color switch: " << color_input << ", so defaulting to colors from model." << endl;
+			}
+			i++;
 		} else {
 			printInvalid(); exit(0);
 		}
@@ -91,5 +103,5 @@ int main(int argc, char *argv[]){
 	cout << "Reading program parameters ..." << endl;
 	parseProgramParameters(argc,argv);
 
-	convert2svo(filename,gridsize);
+	convert2svo(filename,gridsize, color_mode);
 }

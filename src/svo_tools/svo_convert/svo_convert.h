@@ -11,7 +11,7 @@
 #include "OctreeBuilder.h"
 #include "octree2svo.h"
 
-void convert2svo(string filename, size_t gridsize){
+void convert2svo(string filename, size_t gridsize, ColorMode color_mode){
 	// Read mesh, calculate bbox and move to origin
 	TriMesh* mesh = TriMesh::read(filename.c_str());
 	mesh->need_faces(); // unpack triangle strips so we have faces
@@ -32,7 +32,7 @@ void convert2svo(string filename, size_t gridsize){
 
 	// Voxelize
 	cout << "Voxelizing ..." << endl;
-	voxelize(mesh,gridsize,unitlength,voxels,voxel_data, nfilled);
+	voxelize(mesh, gridsize, unitlength, color_mode, voxels, voxel_data, nfilled);
 	cout << "  found " << nfilled << " voxels." << endl;
 
 	// SVO builder
