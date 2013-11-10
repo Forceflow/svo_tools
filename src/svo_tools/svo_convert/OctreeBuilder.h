@@ -3,9 +3,9 @@
 
 #include <stdio.h>
 #include <fstream>
+#include <vector>
 #include <assert.h>
 #include "morton.h"
-#include <vector>
 #include "Node.h"
 #include "svo_convert_util.h"
 #include "voxelization.h"
