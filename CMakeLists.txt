@@ -31,14 +31,14 @@ ADD_EXECUTABLE ( svo_convert
   ./src/svo_tools/svo_convert/main.cpp
   ./src/svo_tools/svo_convert/OctreeBuilder.cpp
   ./src/svo_tools/svo_convert/voxelization.cpp
- )
+)
 
 IF (NOT APPLE)
 TARGET_LINK_LIBRARIES ( svo_convert
   trimesh
   gomp
 )
-ELSE
+ELSE()
 TARGET_LINK_LIBRARIES ( svo_convert
   trimesh
 )
