@@ -20,6 +20,8 @@ string version = "1.0";
 string filename = "";
 size_t gridsize = 512;
 bool verbose = true;
+ColorMode color_mode = COLOR_FROM_MODEL;
+
 
 void printInfo(){
 	cout << "-------------------------------------------------------------" << endl;

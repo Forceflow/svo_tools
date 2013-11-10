@@ -11,6 +11,9 @@
 #include "OctreeBuilder.h"
 #include "octree2svo.h"
 
+// Color options
+enum ColorMode {COLOR_FROM_MODEL, COLOR_FIXED, COLOR_LINEAR, COLOR_NORMAL};
+
 void convert2svo(string filename, size_t gridsize){
 	// Read mesh, calculate bbox and move to origin
 	TriMesh* mesh = TriMesh::read(filename.c_str());
