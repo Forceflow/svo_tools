@@ -17,6 +17,10 @@ void convert2svo(string filename, size_t gridsize, ColorMode color_mode){
 	mesh->need_faces(); // unpack triangle strips so we have faces
 	mesh->need_bbox(); // compute the bounding box
 	mesh->need_normals();
+	if (mesh->colors.empty() && color_mode == COLOR_FROM_MODEL){
+		cout << "WARNING: Mesh has no vertex colors, reverting to fixed color mode.";
+	}
+
 	AABox<vec3> mesh_bbcube = createMeshBBCube(mesh);
 	cout << "Moving mesh to origin ..." << endl;
 	moveToOrigin(mesh, mesh_bbcube);
