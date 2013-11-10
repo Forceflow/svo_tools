@@ -42,12 +42,9 @@ inline void parseNode(const Node &node, const vector<Node> &nodes, const vector<
 	for(int i = 7; i >= 0; i--){ // we write them left to right in the byte order
 		if(child_colored[i]){
 			DataPoint dpoint = data[nodes[node.getChildPos(7-i)].data]; // fetch datapoint
-			unsigned char r = (unsigned char) (255);
-			unsigned char g = (unsigned char) (255);
-			unsigned char b = (unsigned char) (255);
-			//unsigned char r = (unsigned char) (dpoint.color[0] * 255.0f);
-			//unsigned char g = (unsigned char) (dpoint.color[1] * 255.0f);
-			//unsigned char b = (unsigned char) (dpoint.color[2] * 255.0f);
+			unsigned char r = (unsigned char) (dpoint.color[0] * 255.0f);
+			unsigned char g = (unsigned char) (dpoint.color[1] * 255.0f);
+			unsigned char b = (unsigned char) (dpoint.color[2] * 255.0f);
 			fwrite(& r, sizeof(unsigned char), 1, svo_out);
 			fwrite(& g, sizeof(unsigned char), 1, svo_out);
 			fwrite(& b, sizeof(unsigned char), 1, svo_out);
