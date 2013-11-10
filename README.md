@@ -39,7 +39,7 @@ The following steps are required:
 * Open the file *MakeDefs.Darwin64* and remove the *-fopenmp* switch from *ARCHOPTS*
 * In the TriMesh2 folder, run *make*
 
-This should recompile TriMesh2 with clang.
+This should recompile TriMesh2 with clang. If you cannot complete the steps in this paragraph, I've prepared a clang-compiled TriMesh2 version for download **[here](http://www.forceflow.be/svo_models/trimesh2-2.12-clang_version.zip)**.
 
 #### Compiling 
 The only thing left to do is to set the TRIMESH2_ROOT environment variable to point to your local TriMesh2 folder.
