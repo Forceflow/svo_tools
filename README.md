@@ -27,20 +27,27 @@ make
 </pre>
 ### OSX
 
-#### Installing GCC
-You need gcc for OSX, since the standard clang compiler doesn't support OpenMP, which the Trimesh2 library uses.
-* **OSX Mountain Lion**: To install gcc in OSX Mountain Lion, Apple provides the *Command Line Tools for Xcode*, which can be downloaded from within Xcode (like described **[here](http://stackoverflow.com/questions/9353444/how-to-use-install-gcc-on-mac-os-x-10-8-xcode-4-4 here)**) or as a **[stand-alone download](https://developer.apple.com/downloads/)**.
-* **OSX Mavericks**: To install gcc in OSX Mavericks, you'll have to use Homebrew.
+We'll be using some tools which are available in the Apple-provided *Command Line Tools for Xcode*, which can be downloaded from within Xcode (like described **[here](http://stackoverflow.com/questions/9353444/how-to-use-install-gcc-on-mac-os-x-10-8-xcode-4-4 here)**) or as a **[stand-alone download](https://developer.apple.com/downloads/)**.
+
+#### Preparing Trimesh2
+In order to be able to use Trimesh2 with the default Apple clang compiler, we have to recompile the GCC-built binaries that came with it.
+To do this, we have to disable OpenMP support, because clang doesn't have it.
+
+The following steps are required:
+* Download the latest TriMesh2 zip from the **[TriMesh2 page](http://gfx.cs.princeton.edu/proj/trimesh2/)** and unzip it.
+* Navigate to your TriMesh2 folder
+* Open the file *MakeDefs.Darwin64* and remove the *-fopenmp* switch from *ARCHOPTS*
+* In the TriMesh2 folder, run *make*
+
+This should recompile TriMesh2 with clang.
 
 #### Compiling 
-Cmake respects the environment variables CC and CXX, so setting them right before you run cmake should point the build process to gcc.
+The only thing left to do is to set the TRIMESH2_ROOT environment variable to point to your local TriMesh2 folder.
 
 Typical compile on OSX would go like this:
 <pre>
 git clone https://github.com/Forceflow/svo_tools
-export CC=/usr/bin/gcc
-export CXX=/usr/bin/g++
-export TRIMESH2_ROOT=/home/jeroen/development/trimesh2/
+export TRIMESH2_ROOT=/Users/jeroen/development/trimesh2/
 cd svo_tools
 cmake .
 make
