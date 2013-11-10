@@ -29,8 +29,8 @@ make
 
 We'll be using some tools which are available in the Apple-provided *Command Line Tools for Xcode*, which can be downloaded from within Xcode (like described **[here](http://stackoverflow.com/questions/9353444/how-to-use-install-gcc-on-mac-os-x-10-8-xcode-4-4 here)**) or as a **[stand-alone download](https://developer.apple.com/downloads/)**.
 
-#### Preparing Trimesh2
-In order to be able to use Trimesh2 with the default Apple clang compiler, we have to recompile the GCC-built binaries that came with it.
+#### Compiling TriMesh2 with clang
+In order to be able to use TriMesh2 with the default Apple clang compiler, we have to recompile the GCC-built binaries that came with it.
 To do this, we have to disable OpenMP support, because clang doesn't have it.
 
 The following steps are required:
