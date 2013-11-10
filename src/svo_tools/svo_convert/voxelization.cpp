@@ -29,7 +29,8 @@ vec3 getTriangleColor(const TriMesh* mesh, size_t face_id, ColorMode c){
 	} else if (c == COLOR_FIXED){
 		return FIXED_COLOR;
 	} else if (c == COLOR_NORMAL){
-		vec3 normal = normalize(getTriangleShadingNormal(mesh, face_id)); // get normal in range between -1.0 and 1.0
+		vec3 normal = getTriangleShadingNormal(mesh, face_id);
+		normal = normalize(normal); // get normal in range between -1.0 and 1.0
 		return (vec3((normal[0] + 1.0f) / 2.0f, (normal[1] + 1.0f) / 2.0f, (normal[2] + 1.0f) / 2.0f));
 	}
 	return FIXED_COLOR;
