@@ -11,9 +11,6 @@
 #include "OctreeBuilder.h"
 #include "octree2svo.h"
 
-// Color options
-enum ColorMode {COLOR_FROM_MODEL, COLOR_FIXED, COLOR_LINEAR, COLOR_NORMAL};
-
 void convert2svo(string filename, size_t gridsize){
 	// Read mesh, calculate bbox and move to origin
 	TriMesh* mesh = TriMesh::read(filename.c_str());
@@ -21,7 +18,6 @@ void convert2svo(string filename, size_t gridsize){
 	mesh->need_bbox(); // compute the bounding box
 	mesh->need_normals();
 	AABox<vec3> mesh_bbcube = createMeshBBCube(mesh);
-
 	cout << "Moving mesh to origin ..." << endl;
 	moveToOrigin(mesh, mesh_bbcube);
 	float unitlength = (mesh_bbcube.max[0] - mesh_bbcube.min[0]) / ((float) gridsize);

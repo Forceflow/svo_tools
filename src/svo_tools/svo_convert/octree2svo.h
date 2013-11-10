@@ -12,7 +12,6 @@ using namespace std;
 
 // config and convert2svo stuff
 FILE* svo_out;
-ivec3 fixed_color = ivec3(255,255,255);
 
 inline void parseNode(const Node &node, const vector<Node> &nodes, const vector<DataPoint> &data){
 	// create bitsets we'll write out 

@@ -10,8 +10,12 @@
 using namespace std;
 using namespace trimesh;
 
-#define EMPTY_VOXEL 0
-typedef Vec<3, unsigned int> uivec3;
+#define EMPTY_VOXEL 0 // pointer to 0 means empty voxel
+
+
+// Voxel color options
+enum ColorMode { COLOR_FROM_MODEL, COLOR_FIXED, COLOR_NORMAL };
+vec3 fixed_color = vec3(0.0f,0.0f,0.0f);
 
 // Struct to hold collected voxel data
 struct VoxelData{
