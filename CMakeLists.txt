@@ -2,12 +2,13 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 
 PROJECT ( svo_tools )
 
-#FIND_PACKAGE ( OpenMP REQUIRED )
+IF (NOT APPLE)
+FIND_PACKAGE ( OpenMP REQUIRED )
 
 IF (MSVC)
   ADD_DEFINITIONS ( -openmp )
-ELSE ()
-  # Apple and Linux both uses GCC
+ELSEIF (NOT APPLE)
+  # Linux uses GCC
   ADD_DEFINITIONS ( -fopenmp )
 ENDIF (MSVC)
 
@@ -33,5 +34,7 @@ ADD_EXECUTABLE ( svo_convert
 
 TARGET_LINK_LIBRARIES ( svo_convert
   trimesh
+IF (NOT APPLE)
   gomp
+ENDIF (NOT APPLE)
 )
