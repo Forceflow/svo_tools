@@ -1,23 +1,22 @@
 # svo_tools
 This repository contains tools for working with the SVO file format, the format used in the alpha-stage virtual world developed by Hifi (**[Hifi repo](https://github.com/worklist/hifi "Hifi repo")**).
 
-Currently, this repository contains **svo_convert**, a tool to convert any model file (.ply, .3ds, ...) to an SVO structure, through voxelization and SVO building.
+Currently, this repository contains **svo_convert**, a command-line tool to convert any model file (.ply, .3ds, ...) to an SVO structure, through voxelization and SVO building.
 
 The method is based on **[Out-of-core Sparse Voxel Octree Builder](https://github.com/Forceflow/ooc_svo_builder "ooc_svo_builder github repo")**.
-
 Still very much in active development.
 
 ## Building
-**Dependencies** for building are **[TriMesh2](http://gfx.cs.princeton.edu/proj/trimesh2/)** (used for model file I/O) and OpenMP support. The Trimesh2 distribution comes with pre-built binaries for all platforms, so just go ahead and **[download](http://gfx.cs.princeton.edu/proj/trimesh2/)** it, and unzip it to a location you remember.
-### Windows
-Build using *src/svo_tools/svo_tools.sln* VS2012 on Win 64-bit. 32-bit building is not encouraged, but should work.
-You can grab a free version of Visual Studio Express **[here](http://www.microsoft.com/visualstudio/eng/downloads)**.
+**The only dependencies** for building is **[TriMesh2](http://gfx.cs.princeton.edu/proj/trimesh2/)** (used for model file I/O). The Trimesh2 distribution comes with pre-built binaries for all platforms, so just go ahead and **[download](http://gfx.cs.princeton.edu/proj/trimesh2/)** it, and unzip it to a location you remember.
+OpenMP support is optional, and is disabled for OSX.
 
-The TriMesh2 libraries are built against MinGW, so when you're using the VS compiler, you have to rebuild the TriMesh2 library. This can be easily done using the MSVC project **[here](http://gfx.cs.princeton.edu/proj/trimesh2/src/trimesh2-2.11-MSVC.zip)**.
+### Windows
+Build using *src/svo_tools/svo_tools.sln* VS2012 on Win 64-bit. 32-bit building is not encouraged, but should work. You can grab a free version of Visual Studio Express **[here](http://www.microsoft.com/visualstudio/eng/downloads)**. The TriMesh2 libraries are built against MinGW, so when you're using the VS compiler, you have to rebuild the TriMesh2 library. This can be easily done using the MSVC project **[here](http://gfx.cs.princeton.edu/proj/trimesh2/src/trimesh2-2.11-MSVC.zip)**.
+
 ### Linux
 Build using gcc and cmake. Make sure you specify the environment variable TRIMESH2_ROOT.
 
-Typical compile on Linux would go like this:
+A typical compile on Linux would go like this:
 <pre>
 git clone https://github.com/Forceflow/svo_tools
 export TRIMESH2_ROOT=/home/jeroen/development/trimesh2/
@@ -25,8 +24,8 @@ cd svo_tools
 cmake .
 make
 </pre>
-### OSX
 
+### OSX
 We'll be using some tools which are available in the Apple-provided *Command Line Tools for Xcode*, which can be downloaded from within Xcode (like described **[here](http://stackoverflow.com/questions/9353444/how-to-use-install-gcc-on-mac-os-x-10-8-xcode-4-4 here)**) or as a **[stand-alone download](https://developer.apple.com/downloads/)**.
 
 #### Compiling TriMesh2 with clang
@@ -44,7 +43,7 @@ This should recompile TriMesh2 with clang. If you cannot complete the steps in t
 #### Compiling 
 The only thing left to do is to set the TRIMESH2_ROOT environment variable to point to your local TriMesh2 folder.
 
-Typical compile on OSX would go like this:
+A typical compile on OSX would go like this:
 <pre>
 git clone https://github.com/Forceflow/svo_tools
 export TRIMESH2_ROOT=/Users/jeroen/development/trimesh2/
@@ -55,13 +54,27 @@ make
 
 Usage
 -----
-* **svo_convert** -f */path/to/file.ply* -s *gridsize*
+<pre>
+svo_convert -f /path/to/file.ply -s (gridsize) -c (color mode)
+</pre>
 
 Full option list:
 * **-f** */path/to/file.ply* : Path to model file. Currently the file formats supported are those by TriMesh2: .ply, .3ds, .off, .obj.
 * **-s** *value* : Gridsize - only powers of 2 up to 1024 are supported: (1,2,4,8,16,32,64,128,256,512,1024).
+* **-c** *colormode* : Colormode -Options :
+    * *model* : Tries to grab colors from vertices. If the mesh has no colored vertices, it falls back to fixed color.
+    * *fixed* : All voxels get a fixed color (white).
+    * *normal* : Voxels get colored according to the normals of the mesh.
 
 Examples
 --------
 
-* **svo_convert** -f *bunny.ply* -s *512* : Will generate a file named bunny.svo in the same folder, with an SVO of gridsize 512x512x512.
+<pre>
+svo_convert -f /home/jeroen/models/bunny.ply -s 512
+</pre>
+Will generate a file named bunny.svo in the same folder, with an SVO of gridsize 512x512x512. It will use the default color mode, trying to fetch colors from the vertices, and failing that, will color the model white.
+
+<pre>
+svo_convert -f /home/jeroen/models/horse.ply -s 256 -c normal
+</pre>
+Will generate a file named horse.svo in the same folder, with an SVO of gridsize 256x256x256. It will use the normal-based color mode, in which each voxel gets colored according to the mesh face normal.
