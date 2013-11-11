@@ -21,7 +21,7 @@ string filename = "";
 size_t gridsize = 512;
 bool verbose = true;
 ColorMode color_mode = COLOR_FROM_MODEL;
-vec3 FIXED_COLOR = vec3(0.0f, 0.0f, 0.0f);
+vec3 FIXED_COLOR = vec3(1.0f, 1.0f, 1.0f);
 
 void printInfo(){
 	cout << "-------------------------------------------------------------" << endl;
