@@ -7,7 +7,8 @@ The method is based on **[Out-of-core Sparse Voxel Octree Builder](https://githu
 Still very much in active development.
 
 ## Building
-**Dependencies** for building are **[TriMesh2](http://gfx.cs.princeton.edu/proj/trimesh2/)** (used for model file I/O) and OpenMP support. The Trimesh2 distribution comes with pre-built binaries for all platforms, so just go ahead and **[download](http://gfx.cs.princeton.edu/proj/trimesh2/)** it, and unzip it to a location you remember.
+**The only dependencies** for building is **[TriMesh2](http://gfx.cs.princeton.edu/proj/trimesh2/)** (used for model file I/O). The Trimesh2 distribution comes with pre-built binaries for all platforms, so just go ahead and **[download](http://gfx.cs.princeton.edu/proj/trimesh2/)** it, and unzip it to a location you remember.
+OpenMP support is optional, and is disabled for OSX.
 
 ### Windows
 Build using *src/svo_tools/svo_tools.sln* VS2012 on Win 64-bit. 32-bit building is not encouraged, but should work. You can grab a free version of Visual Studio Express **[here](http://www.microsoft.com/visualstudio/eng/downloads)**. The TriMesh2 libraries are built against MinGW, so when you're using the VS compiler, you have to rebuild the TriMesh2 library. This can be easily done using the MSVC project **[here](http://gfx.cs.princeton.edu/proj/trimesh2/src/trimesh2-2.11-MSVC.zip)**.
