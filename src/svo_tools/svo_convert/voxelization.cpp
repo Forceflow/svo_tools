@@ -36,13 +36,13 @@ vec3 getTriangleColor(const TriMesh* mesh, size_t face_id, ColorMode c){
 	return FIXED_COLOR;
 }
 
-void voxelize(const TriMesh* mesh, size_t gridsize, float unitlength, ColorMode color_mode, size_t* voxels, vector<VoxelData>& voxel_data, size_t& nfilled) {
+void voxelize(const TriMesh* mesh, size_t gridsize, float unitlength, ColorMode color_mode, char* voxels, vector<VoxelData>& data, size_t& nfilled){
 	size_t morton_start = 0;
 	size_t morton_end = gridsize*gridsize*gridsize;
 
 	// Clear data
-	memset(voxels,0,(morton_end-morton_start)*sizeof(size_t));
-	voxel_data.clear();
+	memset(voxels, EMPTY_VOXEL, (morton_end - morton_start)*sizeof(char));
+	data.clear();
 
 	// compute partition min and max in grid coords
 	AABox<uivec3> p_bbox_grid;
@@ -162,8 +162,8 @@ void voxelize(const TriMesh* mesh, size_t gridsize, float unitlength, ColorMode 
 					if (((n_zx_e1 DOT p_zx) + d_xz_e1) < 0.0f){continue;}
 					if (((n_zx_e2 DOT p_zx) + d_xz_e2) < 0.0f){continue;}
 
-					voxel_data.push_back(VoxelData(getTriangleShadingNormal(mesh, i), getTriangleColor(mesh, i, color_mode)));
-					voxels[index-morton_start] = voxel_data.size()-1;
+					voxels[index - morton_start] = FULL_VOXEL;
+					data.push_back(VoxelData(index, getTriangleShadingNormal(mesh, i), getTriangleColor(mesh, i, color_mode))); // we ignore data limits for colored voxelization
 					nfilled++;
 					continue;
 				}

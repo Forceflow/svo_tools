@@ -30,7 +30,7 @@ public:
 	bool generate_levels; // switch to enable basic generation of higher octree levels
 
 	OctreeBuilder(size_t gridlength, bool generate_levels);
-	void buildOctree(size_t* voxels, vector<VoxelData>& voxel_data);
+	void buildOctree(char* voxels, vector<VoxelData>& data);
 
 private:
 	void addDataPoint(const uint64_t morton_number, const DataPoint& point);
@@ -44,16 +44,14 @@ private:
 };
 
 // Read voxels and data from arrays and build the SVO
-inline void OctreeBuilder::buildOctree(size_t* voxels, vector<VoxelData>& voxel_data){
-	for (size_t m = 0; m < (gridlength*gridlength*gridlength); m++) {
-		if (! voxels[m] == EMPTY_VOXEL) {
-			DataPoint d = DataPoint();
-			d.opacity = 1.0; // this voxel is filled
-			VoxelData& current_data = voxel_data.at(voxels[m]);
-			d.normal = current_data.normal;
-			d.color = current_data.color;
-			addDataPoint(m, d); // add data point to SVO building algorithm
-		}
+inline void OctreeBuilder::buildOctree(char* voxels, vector<VoxelData>& data){
+	sort(data.begin(), data.end()); // sort voxel data
+	for (std::vector<VoxelData>::iterator it = data.begin(); it != data.end(); ++it){
+		DataPoint d = DataPoint();
+		d.opacity = 1.0;
+		d.normal = it->normal;
+		d.color = it->color;
+		addDataPoint(it->morton, d);
 	}
 	finalizeTree();
 }

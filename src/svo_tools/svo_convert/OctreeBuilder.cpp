@@ -34,7 +34,7 @@ Node OctreeBuilder::groupNodes(const vector<Node> &buffer){
 				first_stored_child = false;
 			} else {
 				octree_nodes.push_back(buffer[k]);
-				parent.children_offset[k] = (octree_nodes.size()-1) - parent.children_base;
+				parent.children_offset[k] = (char) ((octree_nodes.size() - 1) - parent.children_base);
 			}
 		} else {
 			parent.children_offset[k] = NOCHILD;
@@ -61,7 +61,6 @@ Node OctreeBuilder::groupNodes(const vector<Node> &buffer){
 		parent.data = octree_data.size()-1;
 		parent.data_cache = d;
 	}
-
 	return parent;
 }
 
@@ -82,7 +81,7 @@ void OctreeBuilder::addEmptyDataPoint(const int buffer){
 			break; // break the for loop: no upper levels will need changing
 		}
 	}
-	b_current_morton = b_current_morton + pow(8.0,b_maxdepth-buffer); // because we're adding at a certain level
+	b_current_morton = (uint64_t) (b_current_morton + pow(8.0, b_maxdepth - buffer)); // because we're adding at a certain level
 }
 
 // Add a datapoint to the octree: this is the main method used to push datapoints

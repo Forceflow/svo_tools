@@ -29,30 +29,28 @@ void convert2svo(string filename, size_t gridsize, ColorMode color_mode){
 	// Prepare voxel storage
 	cout << "Preparing voxel storage ..." << endl;
 	size_t max_index = gridsize*gridsize*gridsize;
-	size_t* voxels = new size_t[max_index]; // Array holds 0 if there is no voxel, and an index if there is voxel data
-	vector<VoxelData> voxel_data; // Dynamic-sized array holding voxel data
+	char* voxels = new char[max_index]; // Array holds 0 if there is no voxel, and an index if there is voxel data
+	vector<VoxelData> data; // Dynamic-sized array holding voxel data
 	size_t nfilled = 0;
-	cout << "  allocated " << (max_index*sizeof(size_t))/1024 << " kb for voxel table." << endl;
+	cout << "  allocated " << (max_index*sizeof(char))/1024 << " kb for voxel table." << endl;
 
 	// Voxelize
 	cout << "Voxelizing ..." << endl;
-	voxelize(mesh, gridsize, unitlength, color_mode, voxels, voxel_data, nfilled);
+	voxelize(mesh, gridsize, unitlength, color_mode, voxels, data, nfilled);
 	cout << "  found " << nfilled << " voxels." << endl;
 
 	// SVO builder
 	cout << "Building SVO ..." << endl;
 	OctreeBuilder builder = OctreeBuilder(gridsize,false);
-	builder.buildOctree(voxels, voxel_data);
+	builder.buildOctree(voxels, data);
 	cout << "  octree built with " << builder.octree_nodes.size() << " nodes and " << builder.octree_data.size() << " data points." << endl;
 
 	// Free memory
-	cout << "Free memory ..." << endl;
-	delete voxels; voxel_data.clear();
+	delete voxels; data.clear();
 
 	// Converting to SVO file
-	cout << "Convert to .SVO file" << endl;
+	cout << "Convert to .SVO file..." << endl;
 	string base_filename = filename.substr(0,filename.find_last_of("."));
 	octree2SVO(base_filename,builder.octree_nodes, builder.octree_data);
 }
-
 #endif

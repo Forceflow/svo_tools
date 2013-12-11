@@ -74,6 +74,7 @@ inline void octree2SVO(string filename, const vector<Node> &nodes, const vector<
 	// open root node and start parsing recursively
 	parseNode(nodes[(nodes.size()-1)], nodes,data); // parse root node
 	fclose(svo_out);
+	cout << "  written to " << svo_file << endl;
 }
 
 #endif
