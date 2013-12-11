@@ -14,7 +14,7 @@ using namespace trimesh;
 #endif
 
 // (GLOBAL) Program version
-string version = "1.1";
+string version = "1.2";
 
 // (GLOBAL) Program parameters
 string filename = "";
