@@ -1,4 +1,5 @@
 // Various methods of computing morton codes
+// Check http://www.forceflow.be/2013/10/07/morton-encodingdecoding-through-bit-interleaving-implementations/ for more info
 // by Jeroen Baert - jeroen.baert@cs.kuleuven.be - www.forceflow.be
 
 #ifndef MORTON_H_
@@ -14,14 +15,12 @@ uint64_t mortonEncode_magicbits(unsigned int x, unsigned int y, unsigned int z);
 uint64_t mortonEncode_for(unsigned int x, unsigned int y, unsigned int z);
 void mortonDecode(uint64_t morton, unsigned int& x, unsigned int& y, unsigned int& z);
 
-// encode a given (x,y,z) coordinate to a 64-bit morton code
-
 // VERSION WITH FOR LOOP
 // ---------------------
 inline uint64_t mortonEncode_for(unsigned int x, unsigned int y, unsigned int z){
 	uint64_t answer = 0;
-	for (uint64_t i = 0; i < (sizeof(int) * CHAR_BIT); ++i) {
-		answer |= ((x & ((uint64_t)1 << i)) << 2*i) | ((y & ((uint64_t)1 << i)) << (2*i + 1)) | ((z & ((uint64_t)1 << i)) << (2*i + 2));
+	for (uint64_t i = 0; i < (sizeof(int)* CHAR_BIT); ++i) {
+		answer |= ((x & ((uint64_t)1 << i)) << 2 * i) | ((y & ((uint64_t)1 << i)) << (2 * i + 1)) | ((z & ((uint64_t)1 << i)) << (2 * i + 2));
 	}
 	return answer;
 }
@@ -46,11 +45,10 @@ inline uint64_t mortonEncode_magicbits(unsigned int x, unsigned int y, unsigned 
 
 // VERSION WITH LOOKUP TABLE
 // -------------------------
-
-static const uint64_t morton256_x[256] =
+static const uint32_t morton256_x[256] =
 {
-	0x00000000, 
-	0x00000001, 0x00000008, 0x00000009, 0x00000040, 0x00000041, 0x00000048, 0x00000049, 0x00000200, 
+	0x00000000,
+	0x00000001, 0x00000008, 0x00000009, 0x00000040, 0x00000041, 0x00000048, 0x00000049, 0x00000200,
 	0x00000201, 0x00000208, 0x00000209, 0x00000240, 0x00000241, 0x00000248, 0x00000249, 0x00001000,
 	0x00001001, 0x00001008, 0x00001009, 0x00001040, 0x00001041, 0x00001048, 0x00001049, 0x00001200,
 	0x00001201, 0x00001208, 0x00001209, 0x00001240, 0x00001241, 0x00001248, 0x00001249, 0x00008000,
@@ -84,7 +82,7 @@ static const uint64_t morton256_x[256] =
 	0x00249201, 0x00249208, 0x00249209, 0x00249240, 0x00249241, 0x00249248, 0x00249249
 };
 
-static const uint64_t morton256_y[256] = {
+static const uint32_t morton256_y[256] = {
 	0x00000000,
 	0x00000002, 0x00000010, 0x00000012, 0x00000080, 0x00000082, 0x00000090, 0x00000092, 0x00000400,
 	0x00000402, 0x00000410, 0x00000412, 0x00000480, 0x00000482, 0x00000490, 0x00000492, 0x00002000,
@@ -120,7 +118,7 @@ static const uint64_t morton256_y[256] = {
 	0x00492402, 0x00492410, 0x00492412, 0x00492480, 0x00492482, 0x00492490, 0x00492492
 };
 
-static const uint64_t morton256_z[256] = {
+static const uint32_t morton256_z[256] = {
 	0x00000000,
 	0x00000004, 0x00000020, 0x00000024, 0x00000100, 0x00000104, 0x00000120, 0x00000124, 0x00000800,
 	0x00000804, 0x00000820, 0x00000824, 0x00000900, 0x00000904, 0x00000920, 0x00000924, 0x00004000,
@@ -158,17 +156,17 @@ static const uint64_t morton256_z[256] = {
 
 inline uint64_t mortonEncode_LUT(unsigned int x, unsigned int y, unsigned int z){
 	uint64_t answer = 0;
-	answer =	morton256_z[(z >> 16) & 0xFF ] |
-				morton256_y[(y >> 16) & 0xFF ] |
-				morton256_x[(x >> 16) & 0xFF ];
+	answer = morton256_z[(z >> 16) & 0xFF] |
+		morton256_y[(y >> 16) & 0xFF] |
+		morton256_x[(x >> 16) & 0xFF];
 	answer = answer << 48 |
-				morton256_z[(z >> 8) & 0xFF ] |
-				morton256_y[(y >> 8) & 0xFF ] |
-				morton256_x[(x >> 8) & 0xFF ];
+		morton256_z[(z >> 8) & 0xFF] |
+		morton256_y[(y >> 8) & 0xFF] |
+		morton256_x[(x >> 8) & 0xFF];
 	answer = answer << 24 |
-				morton256_z[(z) & 0xFF ] |
-				morton256_y[(y) & 0xFF ] |
-				morton256_x[(x) & 0xFF ];
+		morton256_z[(z)& 0xFF] |
+		morton256_y[(y)& 0xFF] |
+		morton256_x[(x)& 0xFF];
 	return answer;
 }
 
@@ -177,10 +175,10 @@ inline void mortonDecode(uint64_t morton, unsigned int& x, unsigned int& y, unsi
 	x = 0;
 	y = 0;
 	z = 0;
-	for (uint64_t i = 0; i < (sizeof(uint64_t) * CHAR_BIT)/3; ++i) {
-		x |= ((morton & (uint64_t( 1ull ) << uint64_t((3ull * i) + 0ull))) >> uint64_t(((3ull * i) + 0ull)-i));
-		y |= ((morton & (uint64_t( 1ull ) << uint64_t((3ull * i) + 1ull))) >> uint64_t(((3ull * i) + 1ull)-i));
-		z |= ((morton & (uint64_t( 1ull ) << uint64_t((3ull * i) + 2ull))) >> uint64_t(((3ull * i) + 2ull)-i));
+	for (uint64_t i = 0; i < (sizeof(uint64_t)* CHAR_BIT) / 3; ++i) {
+		x |= ((morton & (uint64_t(1ull) << uint64_t((3ull * i) + 0ull))) >> uint64_t(((3ull * i) + 0ull) - i));
+		y |= ((morton & (uint64_t(1ull) << uint64_t((3ull * i) + 1ull))) >> uint64_t(((3ull * i) + 1ull) - i));
+		z |= ((morton & (uint64_t(1ull) << uint64_t((3ull * i) + 2ull))) >> uint64_t(((3ull * i) + 2ull) - i));
 	}
 }
 
