@@ -48,7 +48,7 @@ void printInfo(){
 void printHelp(){
 	cout << "Available program parameters:" << endl;
 	cout << "	-f (filename)  : Path to model file (.obj, .ply, .3ds, .ray)" << endl;
-	cout << "	-s (gridsize)  : Grid size, shouldd be power of 2 (1,2,4,8,16,32,64,128,256,512 or 1024)" << endl;
+	cout << "	-s (gridsize)  : Grid size, should be power of 2 (1,2,4,8,16,32,64,128,256,512 or 1024)" << endl;
 	cout << "	-c <option>    : Coloring of voxels (Options: model (default), fixed, normal)" << endl;
 	cout << "Example: " << endl;
 	cout << "	svo_convert -f bunny.ply -s 256 -c normal" << endl;
