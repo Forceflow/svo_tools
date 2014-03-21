@@ -7,7 +7,7 @@ The method is based on **[Out-of-core Sparse Voxel Octree Builder](https://githu
 Still very much in active development.
 
 ## Binaries
-I put up some precompiled binaries for Windows, Linux and OSX on the **[releases page]https://github.com/Forceflow/svo_tools/releases**
+I put up some precompiled binaries for Windows, Linux and OSX on the **[releases page](https://github.com/Forceflow/svo_tools/releases)**
 
 ## Building
 **The only dependencies** for building is **[TriMesh2](http://gfx.cs.princeton.edu/proj/trimesh2/)** (used for model file I/O). The Trimesh2 distribution comes with pre-built binaries for all platforms, so just go ahead and **[download](http://gfx.cs.princeton.edu/proj/trimesh2/)** it, and unzip it to a location you remember.
