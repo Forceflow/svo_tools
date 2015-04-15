@@ -11,7 +11,9 @@ Still very much in active development.
 ## Binaries
 I put up some precompiled binaries for Windows, Linux and OSX on the **[releases page](https://github.com/Forceflow/svo_tools/releases)**
 
-## Building
+# svo_convert
+
+## svo_convert Building
 **The only dependencies** for building is **[TriMesh2](http://gfx.cs.princeton.edu/proj/trimesh2/)** (used for model file I/O). The Trimesh2 distribution comes with pre-built binaries for all platforms, so just go ahead and **[download](http://gfx.cs.princeton.edu/proj/trimesh2/)** it, and unzip it to a location you remember.
 OpenMP support is optional, and is disabled for OSX.
 
@@ -57,8 +59,8 @@ cmake .
 make
 </pre>
 
-Usage
------
+svo_convert Usage
+-----------------
 <pre>
 svo_convert -f /path/to/file.ply -s (gridsize) -c (color mode)
 </pre>
@@ -71,8 +73,8 @@ Full option list:
     * *fixed* : All voxels get a fixed color (white).
     * *normal* : Voxels get colored according to the normals of the mesh.
 
-Examples
---------
+svo_convert Examples
+--------------------
 
 <pre>
 svo_convert -f /home/jeroen/models/bunny.ply -s 512
@@ -83,3 +85,40 @@ Will generate a file named bunny.svo in the same folder, with an SVO of gridsize
 svo_convert -f /home/jeroen/models/horse.ply -s 256 -c normal
 </pre>
 Will generate a file named horse.svo in the same folder, with an SVO of gridsize 256x256x256. It will use the normal-based color mode, in which each voxel gets colored according to the mesh face normal.
+
+#octree2svo
+
+octree2svo Building
+-------------------
+
+* **Windows** : Build using VS2012 on Win 64-bit. 32-bit building is not encouraged.
+* **Linux** : Build using build_linux.sh.
+
+**Dependencies** for building are **[Trimesh2](http://gfx.cs.princeton.edu/proj/trimesh2/)** and OpenMP support. You can specify the location of the Trimesh2 library in both the VS solution file and the linux build script.
+
+octree2svo Usage
+----------------
+
+* **octree2svo** -f /path/to/file.octree
+
+Full option list:
+* **-f** */path/to/file.octree* : Path to *.octree* file. The *.octreenodes* and *.octreedata* files should be in the same folder.
+* **-c** *color_mode* : (color_mode can be: *fixed*, *from_octree*) Specify the mode in which voxels should be colored. Default is a fixed white color, but you can also force octree2svo to use the colors embedded in the *.octree* file format by using switch *from_octree*.
+* **-h** : Print help and exit
+
+octree2svo Examples
+-------------------
+
+So the full pipeline (including tools from [ooc_svo_builder](https://github.com/Forceflow/ooc_svo_builder)) to get from a model file in .ply, obj or .3ds format to an .svo file might look like this if you want a bunny with fixed colors:
+
+* **tri_convert_binary** -f *bunny.ply*
+* **svo_builder_binary** -f *bunny.tri* -s *1024*
+* **octree2svo** -f *bunny1024_1.octree*
+
+And if you want a bunny with voxel colors from the sampled normals:
+
+* **tri_convert** -f *bunny.ply*
+* **svo_builder** -f *bunny.tri* -s *1024* -c *normal*
+* **octree2svo** -f *bunny1024_1.octree* -c *from_octree*
+
+Each of these tools has more configuration options, please refer to the documentation.
