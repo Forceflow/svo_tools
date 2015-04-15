@@ -1,9 +1,11 @@
 # svo_tools
 This repository contains tools for working with the SVO file format, the format used in the alpha-stage virtual world developed by Hifi (**[Hifi repo](https://github.com/worklist/hifi "Hifi repo")**).
 
-Currently, this repository contains **svo_convert**, a command-line tool to convert any model file (.ply, .3ds, ...) to an SVO structure, through voxelization and SVO building.
+Currently, this repository contains: 
+ * **svo_convert**, a command-line tool to convert any model file (.ply, .3ds, ...) to an SVO structure, through voxelization and SVO building.
+ * **octree2svo**, a command-line tool to convert octrees generated using my **[Out-of-core Sparse Voxel Octree Builder](https://github.com/Forceflow/ooc_svo_builder "ooc_svo_builder github repo")** to .svo files.
 
-The method is based on **[Out-of-core Sparse Voxel Octree Builder](https://github.com/Forceflow/ooc_svo_builder "ooc_svo_builder github repo")**.
+All methods are based on **[Out-of-core Sparse Voxel Octree Builder](https://github.com/Forceflow/ooc_svo_builder "ooc_svo_builder github repo")**.
 Still very much in active development.
 
 ## Binaries
