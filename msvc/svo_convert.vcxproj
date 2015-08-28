@@ -124,22 +124,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="OctreeBuilder.cpp" />
-    <ClCompile Include="voxelization.cpp" />
+    <ClCompile Include="../src/svo_convert/main.cpp" />
+    <ClCompile Include="../src/svo_convert/OctreeBuilder.cpp" />
+    <ClCompile Include="../src/svo_convert/voxelization.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DataPoint.h" />
-    <ClInclude Include="geo_primitives.h" />
-    <ClInclude Include="intersection.h" />
-    <ClInclude Include="mesh_operations.h" />
-    <ClInclude Include="morton.h" />
-    <ClInclude Include="Node.h" />
-    <ClInclude Include="octree2svo.h" />
-    <ClInclude Include="OctreeBuilder.h" />
-    <ClInclude Include="svo_convert.h" />
-    <ClInclude Include="svo_convert_util.h" />
-    <ClInclude Include="voxelization.h" />
+    <ClInclude Include="../src/svo_convert/DataPoint.h" />
+    <ClInclude Include="../src/svo_convert/geo_primitives.h" />
+    <ClInclude Include="../src/svo_convert/intersection.h" />
+    <ClInclude Include="../src/svo_convert/mesh_operations.h" />
+    <ClInclude Include="../src/svo_convert/morton.h" />
+    <ClInclude Include="../src/svo_convert/Node.h" />
+    <ClInclude Include="../src/svo_convert/octree2svo.h" />
+    <ClInclude Include="../src/svo_convert/OctreeBuilder.h" />
+    <ClInclude Include="../src/svo_convert/svo_convert.h" />
+    <ClInclude Include="../src/svo_convert/svo_convert_util.h" />
+    <ClInclude Include="../src/svo_convert/voxelization.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

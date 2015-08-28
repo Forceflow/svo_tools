@@ -27,48 +27,48 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="../src/svo_convert/main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="voxelization.cpp">
+    <ClCompile Include="../src/svo_convert/voxelization.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="OctreeBuilder.cpp">
+    <ClCompile Include="../src/svo_convert/OctreeBuilder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="voxelization.h">
+    <ClInclude Include="../src/svo_convert/voxelization.h">
       <Filter>Header Files\voxelization</Filter>
     </ClInclude>
-    <ClInclude Include="DataPoint.h">
+    <ClInclude Include="../src/svo_convert/DataPoint.h">
       <Filter>Header Files\data_structures</Filter>
     </ClInclude>
-    <ClInclude Include="Node.h">
+    <ClInclude Include="../src/svo_convert/Node.h">
       <Filter>Header Files\data_structures</Filter>
     </ClInclude>
-    <ClInclude Include="morton.h">
+    <ClInclude Include="../src/svo_convert/morton.h">
       <Filter>Header Files\util</Filter>
     </ClInclude>
-    <ClInclude Include="mesh_operations.h">
+    <ClInclude Include="../src/svo_convert/mesh_operations.h">
       <Filter>Header Files\util</Filter>
     </ClInclude>
-    <ClInclude Include="intersection.h">
+    <ClInclude Include="../src/svo_convert/intersection.h">
       <Filter>Header Files\util</Filter>
     </ClInclude>
-    <ClInclude Include="geo_primitives.h">
+    <ClInclude Include="../src/svo_convert/geo_primitives.h">
       <Filter>Header Files\data_structures</Filter>
     </ClInclude>
-    <ClInclude Include="OctreeBuilder.h">
+    <ClInclude Include="../src/svo_convert/OctreeBuilder.h">
       <Filter>Header Files\octree_builder</Filter>
     </ClInclude>
-    <ClInclude Include="svo_convert_util.h">
+    <ClInclude Include="../src/svo_convert/svo_convert_util.h">
       <Filter>Header Files\util</Filter>
     </ClInclude>
-    <ClInclude Include="octree2svo.h">
+    <ClInclude Include="../src/svo_convert/octree2svo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="svo_convert.h">
+    <ClInclude Include="../src/svo_convert/svo_convert.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

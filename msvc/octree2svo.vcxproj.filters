@@ -15,21 +15,21 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="../src/octree2svo/main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DataPoint.h">
+    <ClInclude Include="../src/octree2svo/DataPoint.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Node.h">
+    <ClInclude Include="../src/octree2svo/file_tools.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="octree_io.h">
+    <ClInclude Include="../src/octree2svo/Node.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="file_tools.h">
+    <ClInclude Include="../src/octree2svo/octree_io.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
