@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\voxelization">
+      <UniqueIdentifier>{ff2b33e8-0338-4212-b618-26bff1420861}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\data_structures">
+      <UniqueIdentifier>{853acc85-c366-4d48-8ecf-79d9640d64d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\util">
+      <UniqueIdentifier>{983c7bf5-43f8-4d4a-ba6f-9b5946b97019}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\octree_builder">
+      <UniqueIdentifier>{75865de6-1c12-419b-a6bb-dcf5297223e8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="voxelization.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OctreeBuilder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="voxelization.h">
+      <Filter>Header Files\voxelization</Filter>
+    </ClInclude>
+    <ClInclude Include="DataPoint.h">
+      <Filter>Header Files\data_structures</Filter>
+    </ClInclude>
+    <ClInclude Include="Node.h">
+      <Filter>Header Files\data_structures</Filter>
+    </ClInclude>
+    <ClInclude Include="morton.h">
+      <Filter>Header Files\util</Filter>
+    </ClInclude>
+    <ClInclude Include="mesh_operations.h">
+      <Filter>Header Files\util</Filter>
+    </ClInclude>
+    <ClInclude Include="intersection.h">
+      <Filter>Header Files\util</Filter>
+    </ClInclude>
+    <ClInclude Include="geo_primitives.h">
+      <Filter>Header Files\data_structures</Filter>
+    </ClInclude>
+    <ClInclude Include="OctreeBuilder.h">
+      <Filter>Header Files\octree_builder</Filter>
+    </ClInclude>
+    <ClInclude Include="svo_convert_util.h">
+      <Filter>Header Files\util</Filter>
+    </ClInclude>
+    <ClInclude Include="octree2svo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="svo_convert.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
