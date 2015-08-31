@@ -66,12 +66,18 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>C:\libs\trimesh2_new\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\libs\trimesh2_new\lib.Win64;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\libs\trimesh2\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\libs\trimesh2\lib.Win64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\libs\trimesh2_new\include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\libs\trimesh2\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\libs\trimesh2_new\lib.Win64;$(VCInstallDir)lib\amd64;$(VCInstallDir)atlmfc\lib\amd64;$(WindowsSDK_LibraryPath_x64);</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>C:\libs\trimesh2\include;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>C:\libs\trimesh2\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
